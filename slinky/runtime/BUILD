@@ -1,7 +1,7 @@
-load("@rules_cc//cc:cc_library.bzl", "cc_library")
+load("//third_party/bazel_rules/rules_cc/cc:cc_library.bzl", "cc_library")
 
 package(
-    default_applicable_licenses = ["//:license"],
+    default_applicable_licenses = ["//third_party/slinky:license"],
     default_visibility = ["//visibility:private"],
 )
 
@@ -25,21 +25,23 @@ cc_library(
         "print.h",
         "stmt.h",
     ],
-    deps = [
-        "//slinky/base",
-        "//slinky/base:chrome_trace",
-        "//slinky/base:thread_pool",
-    ],
+    compatible_with = ["//buildenv/target:non_prod"],
     visibility = ["//visibility:public"],
+    deps = [
+        "//third_party/slinky/base",
+        "//third_party/slinky/base:chrome_trace",
+        "//third_party/slinky/base:thread_pool",
+    ],
 )
 
 cc_library(
     name = "visualize",
     srcs = ["visualize.cc"],
     hdrs = ["visualize.h"],
+    compatible_with = ["//buildenv/target:non_prod"],
+    visibility = ["//visibility:public"],
     deps = [
         ":runtime",
-        "//slinky/base",
+        "//third_party/slinky/base",
     ],
-    visibility = ["//visibility:public"],
 )
